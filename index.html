@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Slogan Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            transition: background-color 0.5s ease;
+        }
+        #slogan-box, #result {
+            margin-top: 20px;
+        }
+        #slider {
+            width: 80%;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Task 1: Typing the slogan and tracking time -->
+    <h1>Opportunity Never Knocks the Door Twice</h1>
+    <div id="slogan-box">
+        <input type="text" id="user-input" placeholder="Type the slogan above" size="50">
+        <button onclick="submitSlogan()">Submit</button>
+    </div>
+    <div id="result"></div>
+
+    <!-- Task 2: Changing slogans and background colors -->
+    <h2 id="slogan"></h2>
+    <button onclick="changeSloganAndColor()">Change Slogan and Color</button>
+
+    <!-- Task 3: Background color variation with a slider -->
+    <h3>Adjust Background Color</h3>
+    <input type="range" min="0" max="255" value="127" id="slider" oninput="changeBackgroundColor()">
+
+    <script>
+        // Task 1: Track the typing time for the initial slogan
+        let startTime;
+        document.getElementById('user-input').addEventListener('focus', function() {
+            startTime = new Date();
+        });
+
+        function submitSlogan() {
+            const input = document.getElementById('user-input').value;
+            const endTime = new Date();
+            const timeTaken = (endTime - startTime) / 1000;
+            const correctSlogan = "Opportunity Never Knocks the Door Twice";
+
+            if (input === correctSlogan) {
+                document.getElementById('result').innerHTML = `Correct! You took ${timeTaken} seconds to type the slogan.`;
+            } else {
+                document.getElementById('result').innerHTML = `Incorrect input. Please try again.`;
+            }
+        }
+
+        // Task 2: Change slogans and background colors
+        const slogans = [
+            "Success is not the key to happiness.",
+            "Happiness is the key to success.",
+            "Believe in yourself and all that you are.",
+            "Don't watch the clock; do what it does.",
+            "Act as if what you do makes a difference."
+        ];
+
+        const colors = ["blue", "yellow", "pink", "red", "green"];
+        let index = 0;
+
+        function changeSloganAndColor() {
+            document.body.style.backgroundColor = colors[index];
+            document.getElementById('slogan').innerHTML = slogans[index];
+            index = (index + 1) % slogans.length;
+        }
+
+        // Load initial slogan and background color
+        changeSloganAndColor();
+
+        // Task 3: Background color variation with a slider
+        function changeBackgroundColor() {
+            const sliderValue = document.getElementById('slider').value;
+            const color = `rgb(${sliderValue}, ${255 - sliderValue}, ${sliderValue / 2})`;
+            document.body.style.backgroundColor = color;
+        }
+    </script>
+
+</body>
+</html>
